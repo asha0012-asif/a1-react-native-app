@@ -11,4 +11,8 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         marginTop: 10,
     },
+    h2: {
+        fontSize: 14,
+        alignSelf: "center",
+    },
 });
