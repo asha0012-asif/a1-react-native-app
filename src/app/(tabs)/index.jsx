@@ -33,9 +33,11 @@ export default function Index() {
 
     async function fetchAndSaveUsers() {
         try {
+            const size = 12;
+
             // fetch users from random-data-api
             const res = await fetch(
-                "https://random-data-api.com/api/v2/users?size=4&response_type=json"
+                `https://random-data-api.com/api/v2/users?size=${size}&response_type=json`
             );
 
             if (!res.ok) throw new Error("Failed to fetch users");
