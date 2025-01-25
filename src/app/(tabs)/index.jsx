@@ -18,7 +18,7 @@ export default function Index() {
                 console.log("Users already found in storage.");
             }
         });
-    });
+    }, []);
 
     async function checkForUsersInStorage() {
         const data = await AsyncStorage.getItem(storageKey);
@@ -55,14 +55,12 @@ export default function Index() {
             style={[
                 styles.container,
                 {
-                    paddingTop: insets.top,
+                    paddingTop: 10,
                     paddingLeft: insets.left,
                     paddingRight: insets.right,
                 },
             ]}
         >
-            <Text style={styles.title}>Home</Text>
-
             <Text style={styles.h2}>Welcome to the app</Text>
         </View>
     );
