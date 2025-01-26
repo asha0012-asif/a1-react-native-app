@@ -63,7 +63,36 @@ export default function Index() {
                 },
             ]}
         >
-            <Text style={styles.h2}>Welcome to the app</Text>
+            <View
+                style={{
+                    backgroundColor: "#f7f7f7",
+                    padding: 24,
+                    borderRadius: 8,
+                    marginHorizontal: 16,
+                    alignItems: "center",
+                }}
+            >
+                <Text style={styles.title}>Welcome to NotLinkedIn!</Text>
+            </View>
+            <View
+                style={{
+                    backgroundColor: "#f7f7f7",
+                    padding: 24,
+                    borderRadius: 8,
+                    marginTop: 16,
+                    marginHorizontal: 16,
+                    alignItems: "flex-start",
+                    gap: 8,
+                }}
+            >
+                <Text style={{ fontSize: 16 }}>
+                    This is definitely not just an extremely dumbed-down version
+                    of the platform LinkedIn 🤷🏽‍♂️...
+                </Text>
+                <Text style={{ fontSize: 16 }}>
+                    Get started by navigating to the List tab.
+                </Text>
+            </View>
         </View>
     );
 }

@@ -1,4 +1,11 @@
-import { View, Text, FlatList, RefreshControl, Pressable } from "react-native";
+import {
+    View,
+    Text,
+    FlatList,
+    RefreshControl,
+    Pressable,
+    Image,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styles } from "../../styles/globalStyles";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -62,9 +69,6 @@ export default function List() {
 
             // update users state
             setUsers(data);
-
-            // CHECK W/STEVE IF WE NEED TO APPEND TO EXISTING USERS STATE
-            // setUsers([...users, ...data]);
         } catch (err) {
             console.log(err);
         }
@@ -85,9 +89,9 @@ export default function List() {
                 data={users}
                 renderItem={({ item }) => (
                     <ListItem
-                        id={item.id}
-                        username={item.username}
-                        email={item.email}
+                        id={item["id"]}
+                        avatar={item["avatar"]}
+                        username={item["username"]}
                     />
                 )}
                 refreshControl={
@@ -101,7 +105,7 @@ export default function List() {
     );
 }
 
-function ListItem({ id, username, email }) {
+function ListItem({ id, avatar, username }) {
     const router = useRouter();
 
     function navigateTo() {
@@ -111,8 +115,8 @@ function ListItem({ id, username, email }) {
     return (
         <View style={styles.listItem}>
             <View style={styles.listItemContent}>
-                <Text>{username}</Text>
-                <Text>{email}</Text>
+                <Image source={{ uri: avatar }} style={styles.avatarSm} />
+                <Text style={styles.username}>{username}</Text>
             </View>
 
             <Pressable onPress={navigateTo}>
@@ -120,7 +124,7 @@ function ListItem({ id, username, email }) {
                     name="ellipsis-horizontal"
                     size={24}
                     color="#0f0f0f"
-                    style={{ alignSelf: "center" }}
+                    style={{ alignSelf: "center", opacity: 0.5 }}
                 />
             </Pressable>
         </View>

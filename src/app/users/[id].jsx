@@ -1,13 +1,13 @@
 import { View, Text, Image } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styles } from "../../styles/globalStyles";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function UserDetails() {
-    const insets = useSafeAreaInsets();
     const router = useRouter();
+    const navigation = useNavigation();
     const { id } = useLocalSearchParams();
     const storageKey = "userdata";
 
@@ -22,7 +22,12 @@ export default function UserDetails() {
             if (people) {
                 const person = people.filter((p) => p.id === parseInt(id));
 
-                setUser(...person);
+                setUser(person[0]);
+
+                navigation.setOptions({
+                    title: `${person[0]["first_name"]} ${person[0]["last_name"]}`,
+                    headerBackTitle: "List",
+                });
             } else {
                 router.replace("/index");
             }
@@ -39,38 +44,144 @@ export default function UserDetails() {
 
         return false;
     }
-
-    console.log("User:", user);
+    console.log(user);
 
     return (
-        <View
-            style={[
-                styles.container,
-                {
-                    paddingLeft: insets.left,
-                    paddingRight: insets.right,
-                    alignItems: "center",
-                },
-            ]}
-        >
-            <Image
-                source={{ uri: user["avatar"] }}
+        <View style={[styles.container]}>
+            <View
                 style={{
-                    width: 300,
-                    height: 300,
-                    borderRadius: 150,
-                    borderWidth: 1,
-                    borderColor: "#0f0f0f",
-                    marginVertical: 20,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginVertical: 16,
                 }}
-            />
-            <Text>{user["username"]}</Text>
-            <Text>{user["first_name"]}</Text>
-            <Text>{user["last_name"]}</Text>
-            <Text>{user["date_of_birth"]}</Text>
-            <Text>{user["gender"]}</Text>
-            <Text>{user["email"]}</Text>
-            <Text>{user["phone_number"]}</Text>
+            >
+                <Image
+                    source={{ uri: user["avatar"] }}
+                    style={styles.avatarLg}
+                />
+                <View
+                    style={{
+                        flex: 1,
+                        flexDirection: "column",
+                        marginLeft: 24,
+                        gap: 8,
+                    }}
+                >
+                    <Text style={{ fontSize: 16 }}>
+                        {user["first_name"]} {user["last_name"]}
+                    </Text>
+                    <Text style={{ fontSize: 16 }}>
+                        {user["date_of_birth"]}
+                    </Text>
+                    <Text style={{ fontSize: 16 }}>{user["gender"]}</Text>
+                </View>
+            </View>
+
+            <View
+                style={{
+                    backgroundColor: "#f7f7f7",
+                    padding: 16,
+                    borderRadius: 4,
+                }}
+            >
+                <Text style={{ fontSize: 16 }}>
+                    {user["employment"]?.["title"]}
+                </Text>
+            </View>
+
+            <View
+                style={{
+                    backgroundColor: "#f7f7f7",
+                    padding: 16,
+                    borderRadius: 4,
+                    gap: 8,
+                    marginTop: 16,
+                }}
+            >
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 8,
+                    }}
+                >
+                    <Ionicons
+                        name="mail"
+                        size={24}
+                        color="#0f0f0f"
+                        style={{
+                            alignSelf: "center",
+                            opacity: 0.5,
+                            padding: 4,
+                        }}
+                    />
+                    <Text style={{ fontSize: 16 }}>{user["email"]}</Text>
+                </View>
+
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 8,
+                    }}
+                >
+                    <Ionicons
+                        name="call"
+                        size={24}
+                        color="#0f0f0f"
+                        style={{
+                            alignSelf: "center",
+                            opacity: 0.5,
+                            padding: 4,
+                        }}
+                    />
+                    <Text style={{ fontSize: 16 }}>{user["phone_number"]}</Text>
+                </View>
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 8,
+                    }}
+                >
+                    <Ionicons
+                        name="logo-linkedin"
+                        size={24}
+                        color="#0f0f0f"
+                        style={{
+                            alignSelf: "center",
+                            opacity: 0.5,
+                            padding: 4,
+                        }}
+                    />
+                    <Text style={{ fontSize: 16 }}>{user["username"]}</Text>
+                </View>
+            </View>
+
+            <View
+                style={{
+                    gap: 8,
+                    backgroundColor: "#f7f7f7",
+                    padding: 16,
+                    borderRadius: 4,
+                    marginTop: 16,
+                }}
+            >
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                    Address
+                </Text>
+                <Text style={{ fontSize: 16 }}>
+                    {user["address"]?.["street_address"]}
+                </Text>
+                <Text style={{ fontSize: 16 }}>
+                    {user["address"]?.["city"]}, {user["address"]?.["state"]}
+                </Text>
+                <Text style={{ fontSize: 16 }}>
+                    {user["address"]?.["country"]},{" "}
+                    {user["address"]?.["zip_code"]}
+                </Text>
+            </View>
         </View>
     );
 }
