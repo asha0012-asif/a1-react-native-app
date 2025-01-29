@@ -27,7 +27,7 @@ export default function List() {
             if (people) {
                 setUsers(people);
             } else {
-                router.replace("/index"); // this doesn't work right now
+                router.replace("/");
             }
         });
     }, []);
@@ -87,6 +87,7 @@ export default function List() {
         >
             <FlatList
                 data={users}
+                keyExtractor={(item) => item["id"]}
                 renderItem={({ item }) => (
                     <ListItem
                         id={item["id"]}

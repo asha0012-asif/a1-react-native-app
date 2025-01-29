@@ -15,7 +15,7 @@ export default function UserDetails() {
 
     useEffect(() => {
         if (!id) {
-            router.replace("/index");
+            router.replace("/");
         }
 
         checkForUsersInStorage().then((people) => {
@@ -29,10 +29,10 @@ export default function UserDetails() {
                     headerBackTitle: "List",
                 });
             } else {
-                router.replace("/index");
+                router.replace("/");
             }
         });
-    }, [id]);
+    }, []);
 
     async function checkForUsersInStorage() {
         const data = await AsyncStorage.getItem(storageKey);
