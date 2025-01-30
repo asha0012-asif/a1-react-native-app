@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native";
-import { styles } from "../../styles/globalStyles";
+import { styles } from "../../../styles/globalStyles";
 import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";

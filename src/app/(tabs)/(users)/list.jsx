@@ -1,18 +1,11 @@
-import {
-    View,
-    Text,
-    FlatList,
-    RefreshControl,
-    Pressable,
-    Image,
-} from "react-native";
+import { View, FlatList, RefreshControl } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { styles } from "../../styles/globalStyles";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { styles } from "../../../styles/globalStyles";
 
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { ListItem } from "../../../components/ListItem";
 
 export default function List() {
     const insets = useSafeAreaInsets();
@@ -102,32 +95,6 @@ export default function List() {
                     />
                 }
             />
-        </View>
-    );
-}
-
-function ListItem({ id, avatar, username }) {
-    const router = useRouter();
-
-    function navigateTo() {
-        router.push({ pathname: "/users/[id]", params: { id } });
-    }
-
-    return (
-        <View style={styles.listItem}>
-            <View style={styles.listItemContent}>
-                <Image source={{ uri: avatar }} style={styles.avatarSm} />
-                <Text style={styles.username}>{username}</Text>
-            </View>
-
-            <Pressable onPress={navigateTo}>
-                <Ionicons
-                    name="ellipsis-horizontal"
-                    size={24}
-                    color="#0f0f0f"
-                    style={{ alignSelf: "center", opacity: 0.5 }}
-                />
-            </Pressable>
         </View>
     );
 }

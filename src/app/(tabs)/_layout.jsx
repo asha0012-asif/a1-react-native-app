@@ -14,8 +14,9 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="list"
+                name="(users)"
                 options={{
+                    headerShown: false,
                     title: "List",
                     tabBarIcon: ({ color }) => (
                         <Ionicons name="albums" size={28} color={color} />
