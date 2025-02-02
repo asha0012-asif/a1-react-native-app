@@ -1,22 +1,25 @@
 import { View, FlatList, RefreshControl } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { styles } from "../../../styles/globalStyles";
-
 import { useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+
+import { styles } from "../../../styles/globalStyles";
 import { ListItem } from "../../../components/ListItem";
+import {
+    getUsersFromStorage,
+    fetchAndSaveUsers,
+} from "../../../utils/storageUtils";
 
 export default function List() {
     const insets = useSafeAreaInsets();
     const router = useRouter();
-    const storageKey = "userdata";
 
     const [users, setUsers] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        checkForUsersInStorage().then((people) => {
+        getUsersFromStorage().then((people) => {
             if (people) {
                 setUsers(people);
             } else {
@@ -25,46 +28,17 @@ export default function List() {
         });
     }, []);
 
-    async function checkForUsersInStorage() {
-        const data = await AsyncStorage.getItem(storageKey);
-
-        if (data) {
-            const people = JSON.parse(data);
-            return people;
-        }
-
-        return false;
-    }
-
     function onRefresh() {
-        refetchAndSaveUsers();
+        fetchAndSaveUsers().then((data) => {
+            console.log("Users fetched:", data);
+
+            // update users state
+            setUsers(data);
+        });
 
         setTimeout(() => {
             setRefreshing(false);
         }, 400);
-    }
-
-    async function refetchAndSaveUsers() {
-        try {
-            const size = 12;
-
-            // fetch users from random-data-api
-            const res = await fetch(
-                `https://random-data-api.com/api/v2/users?size=${size}&response_type=json`
-            );
-
-            if (!res.ok) throw new Error("Failed to fetch users");
-
-            const data = await res.json();
-
-            // save users to storage
-            await AsyncStorage.setItem(storageKey, JSON.stringify(data));
-
-            // update users state
-            setUsers(data);
-        } catch (err) {
-            console.log(err);
-        }
     }
 
     return (

@@ -1,15 +1,16 @@
 import { View, Text, Image } from "react-native";
-import { styles } from "../../../styles/globalStyles";
-import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
+
+import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+
+import { styles } from "../../../styles/globalStyles";
+import { getUsersFromStorage } from "../../../utils/storageUtils";
 
 export default function UserDetails() {
     const router = useRouter();
     const navigation = useNavigation();
     const { id } = useLocalSearchParams();
-    const storageKey = "userdata";
 
     const [user, setUser] = useState({});
 
@@ -18,7 +19,7 @@ export default function UserDetails() {
             router.replace("/");
         }
 
-        checkForUsersInStorage().then((people) => {
+        getUsersFromStorage().then((people) => {
             if (people) {
                 const person = people.filter((p) => p.id === parseInt(id));
 
@@ -33,18 +34,6 @@ export default function UserDetails() {
             }
         });
     }, []);
-
-    async function checkForUsersInStorage() {
-        const data = await AsyncStorage.getItem(storageKey);
-
-        if (data) {
-            const people = JSON.parse(data);
-            return people;
-        }
-
-        return false;
-    }
-    console.log(user);
 
     return (
         <View style={[styles.container]}>
