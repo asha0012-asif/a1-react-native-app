@@ -1,17 +1,18 @@
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import { useEffect } from "react";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 import { styles } from "../../theme/theme";
 import {
     getUsersFromStorage,
     fetchAndSaveUsers,
-    clearStorage,
 } from "../../utils/storageUtils";
 
 export default function Index() {
     const insets = useSafeAreaInsets();
+    const router = useRouter();
 
     useEffect(() => {
         getUsersFromStorage().then((users) => {
@@ -49,8 +50,6 @@ export default function Index() {
                     Get started by navigating to the List tab.
                 </Text>
             </View>
-
-            <Button onPress={clearStorage} title="Clear Storage" />
         </View>
     );
 }

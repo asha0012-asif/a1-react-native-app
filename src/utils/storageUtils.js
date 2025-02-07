@@ -1,9 +1,11 @@
+// this page was added since common functions for storage operations were needed in multiple pages (follows DRY principle)
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const storageKey = "userdata";
+const STORAGE_KEY = "userdata";
 
 async function getUsersFromStorage() {
-    const data = await AsyncStorage.getItem(storageKey);
+    const data = await AsyncStorage.getItem(STORAGE_KEY);
 
     if (data) {
         const users = JSON.parse(data);
@@ -27,7 +29,7 @@ async function fetchAndSaveUsers() {
         const data = await res.json();
 
         // save users to storage
-        await AsyncStorage.setItem(storageKey, JSON.stringify(data));
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
         return data;
     } catch (err) {
@@ -35,8 +37,9 @@ async function fetchAndSaveUsers() {
     }
 }
 
+// was added for testing purposes (call this function to clear storage within any page of this app)
 async function clearStorage() {
-    await AsyncStorage.removeItem(storageKey);
+    await AsyncStorage.removeItem(STORAGE_KEY);
 }
 
 export { getUsersFromStorage, fetchAndSaveUsers, clearStorage };
