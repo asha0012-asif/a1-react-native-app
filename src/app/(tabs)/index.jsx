@@ -1,56 +1,29 @@
 import { View, Text } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { styles } from "../../styles/globalStyles";
-
 import { useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { styles } from "../../theme/theme";
+import {
+    getUsersFromStorage,
+    fetchAndSaveUsers,
+} from "../../utils/storageUtils";
 
 export default function Index() {
     const insets = useSafeAreaInsets();
-    const storageKey = "userdata";
 
     useEffect(() => {
-        checkForUsersInStorage().then((users) => {
+        getUsersFromStorage().then((users) => {
             if (!users) {
                 console.log("No users found in storage. Fetching...");
-                fetchAndSaveUsers();
+                fetchAndSaveUsers().then((data) =>
+                    console.log("Users fetched:", data)
+                );
             } else {
                 console.log("Users already found in storage.");
             }
         });
     }, []);
-
-    async function checkForUsersInStorage() {
-        const data = await AsyncStorage.getItem(storageKey);
-
-        if (data) {
-            const users = JSON.parse(data);
-            return users;
-        }
-
-        return false;
-    }
-
-    async function fetchAndSaveUsers() {
-        try {
-            const size = 12;
-
-            // fetch users from random-data-api
-            const res = await fetch(
-                `https://random-data-api.com/api/v2/users?size=${size}&response_type=json`
-            );
-
-            if (!res.ok) throw new Error("Failed to fetch users");
-
-            const data = await res.json();
-            console.log("Users fetched:", data);
-
-            // save users to storage
-            await AsyncStorage.setItem(storageKey, JSON.stringify(data));
-        } catch (err) {
-            console.log(err);
-        }
-    }
 
     return (
         <View
@@ -63,7 +36,18 @@ export default function Index() {
                 },
             ]}
         >
-            <Text style={styles.h2}>Welcome to the app</Text>
+            <View style={styles.card}>
+                <Text style={styles.titleText}>Welcome to NotLinkedIn!</Text>
+            </View>
+            <View style={[styles.card, { marginTop: 16, gap: 8 }]}>
+                <Text style={styles.regularText}>
+                    This is definitely not just an extremely dumbed-down version
+                    of the platform LinkedIn 🤷🏽‍♂️...
+                </Text>
+                <Text style={styles.regularText}>
+                    Get started by navigating to the List tab.
+                </Text>
+            </View>
         </View>
     );
 }
