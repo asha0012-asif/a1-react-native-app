@@ -1,6 +1,6 @@
 import { View, Text, Image, Pressable } from "react-native";
 import { useRouter } from "expo-router";
-import { styles } from "../styles/globalStyles";
+import { styles, colors } from "../theme/theme";
 import { Ionicons } from "@expo/vector-icons";
 
 export function ListItem({ id, avatar, username }) {
@@ -13,16 +13,16 @@ export function ListItem({ id, avatar, username }) {
     return (
         <View style={styles.listItem}>
             <View style={styles.listItemContent}>
-                <Image source={{ uri: avatar }} style={styles.avatarSm} />
-                <Text style={styles.username}>{username}</Text>
+                <Image source={{ uri: avatar }} style={styles.avatarSmall} />
+                <Text style={styles.regularText}>{username}</Text>
             </View>
 
             <Pressable onPress={navigateTo}>
                 <Ionicons
                     name="ellipsis-horizontal"
-                    size={24}
-                    color="#0f0f0f"
-                    style={{ alignSelf: "center", opacity: 0.5 }}
+                    size={styles.iconSize}
+                    color={colors.black}
+                    style={[styles.icons, { padding: 0 }]}
                 />
             </Pressable>
         </View>

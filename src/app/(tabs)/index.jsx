@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { styles } from "../../styles/globalStyles";
+import { styles } from "../../theme/theme";
 import {
     getUsersFromStorage,
     fetchAndSaveUsers,
@@ -37,33 +37,15 @@ export default function Index() {
                 },
             ]}
         >
-            <View
-                style={{
-                    backgroundColor: "#f7f7f7",
-                    padding: 24,
-                    borderRadius: 8,
-                    marginHorizontal: 16,
-                    alignItems: "center",
-                }}
-            >
-                <Text style={styles.title}>Welcome to NotLinkedIn!</Text>
+            <View style={styles.card}>
+                <Text style={styles.titleText}>Welcome to NotLinkedIn!</Text>
             </View>
-            <View
-                style={{
-                    backgroundColor: "#f7f7f7",
-                    padding: 24,
-                    borderRadius: 8,
-                    marginTop: 16,
-                    marginHorizontal: 16,
-                    alignItems: "flex-start",
-                    gap: 8,
-                }}
-            >
-                <Text style={{ fontSize: 16 }}>
+            <View style={[styles.card, { marginTop: 16, gap: 8 }]}>
+                <Text style={styles.regularText}>
                     This is definitely not just an extremely dumbed-down version
                     of the platform LinkedIn 🤷🏽‍♂️...
                 </Text>
-                <Text style={{ fontSize: 16 }}>
+                <Text style={styles.regularText}>
                     Get started by navigating to the List tab.
                 </Text>
             </View>

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
-import { styles } from "../../../styles/globalStyles";
+import { styles } from "../../../theme/theme";
 import { ListItem } from "../../../components/ListItem";
 import {
     getUsersFromStorage,
@@ -30,8 +30,6 @@ export default function List() {
 
     function onRefresh() {
         fetchAndSaveUsers().then((data) => {
-            console.log("Users fetched:", data);
-
             // update users state
             setUsers(data);
         });

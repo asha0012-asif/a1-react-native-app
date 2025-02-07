@@ -1,6 +1,8 @@
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
+import { styles } from "../../theme/theme";
+
 export default function TabLayout() {
     return (
         <Tabs initialRouteName="index">
@@ -8,8 +10,11 @@ export default function TabLayout() {
                 name="index"
                 options={{
                     title: "Home",
-                    tabBarIcon: ({ color }) => (
-                        <Ionicons name="home" size={28} color={color} />
+                    tabBarLabelStyle: styles.tabIcons,
+                    tabBarActiveTintColor: styles.activeTabIconColor,
+                    tabBarInactiveTintColor: styles.inactiveTabIconColor,
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="home" size={size} color={color} />
                     ),
                 }}
             />
@@ -18,8 +23,11 @@ export default function TabLayout() {
                 options={{
                     headerShown: false,
                     title: "List",
-                    tabBarIcon: ({ color }) => (
-                        <Ionicons name="albums" size={28} color={color} />
+                    tabBarLabelStyle: styles.tabIcons,
+                    tabBarActiveTintColor: styles.activeTabIconColor,
+                    tabBarInactiveTintColor: styles.inactiveTabIconColor,
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="albums" size={size} color={color} />
                     ),
                 }}
             />
