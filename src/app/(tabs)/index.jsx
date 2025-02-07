@@ -2,7 +2,6 @@ import { View, Text } from "react-native";
 import { useEffect } from "react";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
 
 import { styles } from "../../theme/theme";
 import {
@@ -12,7 +11,6 @@ import {
 
 export default function Index() {
     const insets = useSafeAreaInsets();
-    const router = useRouter();
 
     useEffect(() => {
         getUsersFromStorage().then((users) => {
